@@ -1,0 +1,55 @@
+<style>
+    html,
+    body,
+    #unity-canvas-container,
+    canvas {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%
+    }
+
+    canvas {
+        position: absolute;
+        z-index: 9
+    }
+</style>
+<div id="unity-canvas-container">
+    <canvas id="#canvas"></canvas>
+    <script>
+        const _originalFetch = window.fetch;
+        window.fetch = async function (input, init) {
+            let url = typeof input === 'string' ? input : input?.url || '';
+            if (typeof url === 'string' && url.includes('xp_level/init_data'))
+                input = url.replace('xp_level/init_data/', 'api/xp_level.json');
+
+            const response = await _originalFetch.call(this, input, init);
+            if (typeof url === 'string' && url.includes("atlas")) {
+                const type = url.includes("high") ? "high" : (url.includes("low") ? "low" : (url.includes("mid") ? "mid" : null))
+                try {
+                    const arrayBuffer = await response.arrayBuffer();
+                    const originalBytes = new Uint8Array(arrayBuffer);
+                    const modifiedBytes = await processAndModifyAtlas(originalBytes, type);
+                    return new Response(modifiedBytes, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    });
+                } catch (err) {
+                    console.error("Error modifying Atlas bytes:", err);
+                }
+            }
+
+            return response;
+        };
+
+        async function processAndModifyAtlas(bytes, type) {
+            if (top.processAndModifyAtlas) bytes = await top.processAndModifyAtlas(bytes, type);
+            return bytes;
+        }
+
+
+        window.WebSocket = top.WebSocket;
+        window.webgl.run({}, window.innerWidth, window.innerHeight, {});
+    </script>
+</div>

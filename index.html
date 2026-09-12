@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KoGaMap</title>
+
+  <link rel="icon" href="./icon.png">
+  <meta name="description" content="Upload and play KoGaMa world maps.">
+  <meta name="theme-color" content="#7fab70">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KoGaMap">
+  <meta property="og:description" content="Upload and play KoGaMa world maps.">
+  <meta property="og:image" content="./icon.png">
+  <script type="module" crossorigin src="/assets/index-BuF-qy25.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-z-zNji7p.css">
+</head>
+
+<body>
+  <div id="iframe-container">
+    <!-- Unity loading overlay — shown while WebGL downloads/initialises -->
+    <div id="unity-loading">
+      <div id="unity-loading-inner">
+        <div id="unity-loading-label">Loading KoGaMa…</div>
+        <div id="unity-loading-bar-track">
+          <div id="unity-loading-bar-fill"></div>
+        </div>
+        <div id="unity-loading-pct">0%</div>
+      </div>
+    </div>
+    <div id="rejoin-container" style="display:none">
+      <div style="
+            background: rgba(15, 15, 15, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    pointer-events: auto;
+    box-sizing: border-box;
+    width: 90%;
+    max-width: 300px;
+    align-items: center;
+        ">
+        <h3>Disconnected</h3>
+        <button class="action" id="rejoin-btn" style="width: fit-content;">Rejoin</button>
+      </div>
+    </div>
+    <div id="container-topper">
+      <div id="control-section">
+        <div class="grid">
+
+          <div class="card">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M9 3v15M15 6v15M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="card-title">Default Map</div>
+            <div class="card-desc"></div>
+            <button class="action" id="default-button">Use Default Map</button>
+          </div>
+
+          <div class="card outline">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M12 3v12m0-12l-4 4m4-4l4 4M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="card-title">Upload Map</div>
+            <div class="card-desc"></div>
+            <button class="action" id="upload-button">Upload Map</button>
+          </div>
+
+          <div class="card join-card">
+            <div class="join-top">
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                  <path
+                    d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2M10 11a4 4 0 100-8 4 4 0 000 8zM21 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div>
+                <div class="card-title">Join a Friend</div>
+                <div class="card-desc" style="margin-bottom:0; min-height:0;"></div>
+              </div>
+            </div>
+            <div style="color: #f53535;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bolder;">Your public IP address will be exposed to the host.</div>
+            <div class="join-form">
+              <div class="field">
+                <label for="roomCode">Room Code</label>
+                <input type="text" id="room-code" placeholder="-">
+              </div>
+              <div class="field">
+                <label for="userName">UserName</label>
+                <input type="text" id="username" placeholder="-">
+              </div>
+              <button class="action" id="avatar-btn">Upload Avatar</button>
+              <button class="action" id="join-btn">Join</button>
+            </div>
+            <div class="status" id="join-status" style="display: none;">
+              <span class="status-dot"></span>
+              Waiting for room code…
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="color:#ffffff6b;display:flex;align-items:center;gap:20px;position:absolute;bottom:10px;left:10px;">
+    <div id="dc" class="transition" style="cursor:pointer;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 -50 256 256" fill="currentColor">
+        <path
+          d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" />
+      </svg>
+    </div>
+  </div>
+  <div id="settings-btn" style="display:none;">
+    Settings
+  </div>
+</body>
+
+</html>
